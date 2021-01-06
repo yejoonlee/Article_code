@@ -4,8 +4,8 @@ import scipy
 import numpy as np
 import matplotlib.pylab as pl
 
-from shap.plots import labels, colors
-from shap.plots.monitoring import truncate_text
+# from shap.plots import labels, colors
+# from shap.plots.monitoring import truncate_text
 
 
 def subsample_data(X, y, n_sample=100, seed_temp=1234):
@@ -122,7 +122,7 @@ def monitoring_plot_tuned(ind, shap_values, features, feature_names=None, show=T
     num_features = shap_values.shape[1]
 
     if feature_names is None:
-        feature_names = np.array([labels['FEATURE'] % str(i) for i in range(num_features)])
+        feature_names = np.array([shap.plots.labels['FEATURE'] % str(i) for i in range(num_features)])
 
     pl.figure(figsize=(10, 3))
     ys = shap_values[:, ind]
@@ -146,10 +146,10 @@ def monitoring_plot_tuned(ind, shap_values, features, feature_names=None, show=T
         print("t-test fail:")
         print("min_pval: ", min_pval, ";", "min_pval_ind: ", min_pval_ind)
 
-    pl.scatter(xs, ys, s=10, c=features[:, ind], cmap=colors.red_blue)
+    pl.scatter(xs, ys, s=10, c=features[:, ind], cmap=shap.plots.colors.red_blue)
 
     pl.xlabel("Sample index")
-    pl.ylabel(truncate_text(feature_names[ind], 30) + "\nSHAP value", size=13)
+    pl.ylabel(shap.plots.monitoring.truncate_text(feature_names[ind], 30) + "\nSHAP value", size=13)
     pl.gca().xaxis.set_ticks_position('bottom')
     pl.gca().yaxis.set_ticks_position('left')
     pl.gca().spines['right'].set_visible(False)
@@ -158,6 +158,6 @@ def monitoring_plot_tuned(ind, shap_values, features, feature_names=None, show=T
     cb.outline.set_visible(False)
     bbox = cb.ax.get_window_extent().transformed(pl.gcf().dpi_scale_trans.inverted())
     cb.ax.set_aspect((bbox.height - 0.7) * 20)
-    cb.set_label(truncate_text(feature_names[ind], 30), size=13)
+    cb.set_label(shap.plots.monitoring.truncate_text(feature_names[ind], 30), size=13)
     if show:
         pl.show()
