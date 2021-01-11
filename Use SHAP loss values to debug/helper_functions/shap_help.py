@@ -4,6 +4,7 @@ import scipy
 import numpy as np
 import matplotlib.pylab as pl
 
+# labels와 monitoring을 import하는데에 에러가 생겨 shop만 import하고 하위 디렉토리를 찾아 사용해줌
 # from shap.plots import labels, colors
 # from shap.plots.monitoring import truncate_text
 
